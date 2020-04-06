@@ -4,3 +4,10 @@ C:\Users\matt.fordham\Downloads\fv-client-integrations\javascript-example-google
 C:\Users\matt.fordham\Downloads\fv-client-integrations\javascript-example-googlemaps\demo\obj\Debug\demo.dll
 C:\Users\matt.fordham\Downloads\fv-client-integrations\javascript-example-googlemaps\demo\obj\Debug\demo.pdb
 C:\Users\matt.fordham\Downloads\fv-client-integrations\javascript-example-googlemaps\demo\obj\Debug\demo.csprojResolveAssemblyReference.cache
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\bin\demo.dll.config
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\bin\demo.dll
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\bin\demo.pdb
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\obj\Debug\demo.csproj.CoreCompileInputs.cache
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\obj\Debug\demo.dll
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\obj\Debug\demo.pdb
+C:\Users\Charles\source\repos\client-api-examples-master\javascript-example-googlemaps-vs\demo\obj\Debug\demo.csprojAssemblyReference.cache
