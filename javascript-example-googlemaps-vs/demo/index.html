@@ -49,6 +49,19 @@
 	</div>
 
 	<script type="text/javascript">
+		//Global to store the API key; Google maps API setup. Please enter your API key here.
+		var APIKey = 'AIzaSyCGXdPvpcla10uyQjOlDL7WLfMF94GxdDc';		
+
+        var URL = "https://maps.googleapis.com/maps/api/js?key=" + APIKey + "&callback";
+
+		if (APIKey != '') {
+			let script = document.createElement('script');
+			script.async = true;
+			script.defer = true;
+			script.src = URL;
+			document.body.append(script);
+        }
+
 		// Global used to store current screen name
 		var screenName = '';
 
@@ -56,7 +69,6 @@
 		//var postcode = null;
 
 		// Global used to store Google Maps API Key
-		var APIKey = 'AIzaSyCGXdPvpcla10uyQjOlDL7WLfMF94GxdDc'
 
 		var modal = document.getElementById("mapModal");
 
@@ -69,63 +81,97 @@
 
 		// The function called by the onnewscreen event
 		function onNewScreenCustom(rows, name) {
-			screenName = name;
-			var map = document.getElementById('GoogleMap');
-			var mapDiv = document.getElementById('mapDiv');
-
-			//declare postcode regex
-			var regex = new RegExp("^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$", 'gm');
+			//screenName = name;
 
 			switch (name) {
 				case 'AcctSummary':
-					//old way of getting the post code
-					//postcode = fvt.GetScnText(10, 29, 8);
-
-					var map = new google.maps.Map(document.getElementById('mapDiv'), {
-						zoom: 15,
-						center: { lat: -34.397, lng: 150.644 }
-					});
-					var geocoder = new google.maps.Geocoder();
-
-					var postcodeSpans = $("#FVTerm").contents().find("html").contents().find("iframe#termW").contents().find("span.ST2").filter(function () {
-						return regex.test($(this).text().trim());
-					}).each(function () {
-						//if you want the span to be clickable instead of/as well as the image
-
-						//$(this).on('click', function () {
-						//	//ev.preventDefault();
-
-						//	geocodeAddress(geocoder, map, $(this).text().trim());
-
-						//	modal.style.display = "block";
-						//});
-						//$(this).hover(function () {
-						//	$(this).css('cursor', 'pointer');
-						//});
-
-						var thisText = $(this).text().trim();
-
-						$(this).text($(this).text().slice(0, -1));
-
-						var img = $('<img src="../demo/images/google_maps_icon.png" style="width:1.5%; height 1.5%; left:0; bottom:0;"/>')
-						
-						img.on('click', function () {
-                            var result = geocodeAddress(geocoder, map, thisText);
-						});
-
-                        img.hover(function () {
-                            $(this).css('cursor', 'pointer');
-						});
-
-						$(this).prepend(img);
-
-					});
-
+					if (APIKey != '')
+						try {
+							attachMapsToPostcodeSpans();
+						}
+						catch (e) {
+							try {
+								attachMapsToPostcodeSpansNoApi();
+							}
+							catch (e) {
+							}
+						}
+					else
+						try {
+							attachMapsToPostcodeSpansNoApi();
+						}
+						catch (e) {
+                        }
 					break;
 				default:
-					x.className = x.className.replace("show", "");
+                    break;
+
 			}
 		}
+
+		function attachMapsToPostcodeSpans() {
+            var map = new google.maps.Map(document.getElementById('mapDiv'), {
+                zoom: 15,
+                center: { lat: -34.397, lng: 150.644 },
+                fullscreenControl: false
+			});
+
+			var geocoder = new google.maps.Geocoder();
+
+            var regex = new RegExp("^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$", 'gm');
+
+            $("#FVTerm").contents().find("html").contents().find("iframe#termW").contents().find("span.ST2").filter(function () {
+                return regex.test($(this).text().trim());
+            }).each(function () {
+                //if you want the span to be clickable instead of/as well as the image
+
+                //$(this).on('click', function () {
+                //	//ev.preventDefault();
+
+                //	geocodeAddress(geocoder, map, $(this).text().trim());
+
+                //	modal.style.display = "block";
+                //});
+                //$(this).hover(function () {
+                //	$(this).css('cursor', 'pointer');
+                //});
+
+                var thisText = $(this).text().trim();
+
+                $(this).text($(this).text().slice(0, -1));
+
+                var img = $('<img src="../demo/images/google_maps_icon.png" style="width:1.5%; height 1.5%; left:0; bottom:0;"/>')
+
+                img.on('click', function () {
+                    var result = geocodeAddress(geocoder, map, thisText);
+                });
+
+                img.hover(function () {
+                    $(this).css('cursor', 'pointer');
+                });
+
+                $(this).prepend(img);
+
+            });
+		}
+
+		function attachMapsToPostcodeSpansNoApi() {
+            var regex = new RegExp("^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$", 'gm');
+
+            $("#FVTerm").contents().find("html").contents().find("iframe#termW").contents().find("span.ST2").filter(function () {
+                return regex.test($(this).text().trim());
+			}).each(function () {
+				var mapURL = "http://maps.google.co.uk/maps?q=" + $(this).text().trim();
+
+                var img = $('<a id="imagelink" href="' + mapURL +'" target="_blank"><img src="../demo/images/google_maps_icon.png" style="width:1.5%; height 1.5%; left:0; bottom:0;"/></a>')
+
+                img.hover(function () {
+                    $(this).css('cursor', 'pointer');
+                });
+
+                $(this).prepend(img);
+            });
+        }
 
 		function geocodeAddress(geocoder, resultsMap, postcode) {
 			var address = postcode;
@@ -155,10 +201,8 @@
 			}
 			return true;
 		}
+
 	</script>
 
-	<script async defer
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGXdPvpcla10uyQjOlDL7WLfMF94GxdDc&callback=initMap">
-	</script>
 </body>	
 </html>	
