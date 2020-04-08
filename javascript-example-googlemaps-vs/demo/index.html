@@ -50,7 +50,7 @@
 
 	<script type="text/javascript">
 		//Global to store the API key; Google maps API setup. Please enter your API key here.
-		var APIKey = '';		
+        var APIKey = 'AIzaSyBWfjARgsNZ2Zuf63Yst6HeyoUypewmFbA';		
 
         var URL = "https://maps.googleapis.com/maps/api/js?key=" + APIKey + "&callback";
 
@@ -59,7 +59,7 @@
 			script.async = true;
 			script.defer = true;
 			script.src = URL;
-			document.body.append(script);
+			document.body.appendChild(script);
         }
 
 		// Global used to store current screen name
@@ -67,8 +67,6 @@
 
 		// Global used to store postcode for map lookup (now unused)
 		//var postcode = null;
-
-		// Global used to store Google Maps API Key
 
 		var modal = document.getElementById("mapModal");
 
